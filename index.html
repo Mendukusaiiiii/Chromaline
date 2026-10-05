@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chromaline</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Instrument+Sans:wght@400;600&family=Playfair+Display:wght@500&family=Caveat:wght@500&family=Bebas+Neue&family=Pacifico&family=Space+Mono&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <div class="head"><img id="logo" alt="Title image" hidden><h1 data-t="title">Chromaline</h1><p class="sub" data-t="subtitle"></p></div>
+    <div>
+      <div class="wheelbox"><div class="wheel" id="wheel" tabindex="0" role="slider" aria-label="Color and tone. Arrow keys move around the wheel."><div class="marker" id="marker"></div></div></div>
+      <div class="readout" id="readout" aria-live="off"></div>
+    </div>
+    <div class="ctl">
+      <div><label for="scale" data-t="scale">Scale</label>
+        <select id="scale"></select></div>
+      <div><span class="lab" data-t="pitchRange">Pitch range</span>
+        <div class="seg" id="range"><button data-o="0" aria-pressed="false" data-t="low">Low</button><button data-o="1" aria-pressed="true" data-t="mid">Mid</button><button data-o="2" aria-pressed="false" data-t="high">High</button></div></div>
+      <label class="chk"><input type="checkbox" id="phon"><span><span data-t="playhead">Playhead</span><small data-t="playheadHint">A line sweeps across and holds a smooth tone for every stroke it crosses.</small></span></label>
+      <div><label for="sweep"><span data-t="sweepTime">Sweep time</span>: <span id="sweepv">8</span> s</label><input type="range" id="sweep" min="3" max="20" step="1" value="8"></div>
+      <div class="stroke-settings">
+        <div>
+          <label for="strokeSetting" data-t="strokeSettings">Stroke Settings</label>
+          <select id="strokeSetting" aria-controls="strokeControls">
+            <option value="psize">Pen size</option>
+            <option value="pvar" data-hide-in-pixel>Size variation</option>
+            <option value="glow">Line glow</option>
+            <option value="shape" data-t="penShape" data-hide-in-pixel>Pen shape</option>
+          </select>
+        </div>
+        <div id="strokeControls">
+          <div class="stroke-control" data-stroke-control="psize"><label for="psize"><span data-t="penSize">Pen size</span>: <span id="psizev">10</span> px</label><input type="range" id="psize" min="2" max="40" step="1" value="10"></div>
+          <div class="stroke-control" data-stroke-control="pvar" hidden><label for="pvar"><span data-t="sizeVariation">Size variation</span>: <span id="pvarv">60</span>%</label><input type="range" id="pvar" min="0" max="100" step="5" value="60"></div>
+          <div class="stroke-control" data-stroke-control="glow" hidden>
+            <label for="glowIntensity"><span data-t="glowRange">Line glow</span>: <span id="glowValue">11</span> px</label>
+            <input type="range" id="glowIntensity" min="0" max="40" step="1" value="11" aria-label="Line glow intensity" aria-valuetext="11 pixels">
+          </div>
+          <div class="stroke-control" data-stroke-control="shape" hidden>
+            <label for="penShape" data-t="penShape">Pen shape</label>
+            <select id="penShape">
+              <option value="round" data-t="round">Round</option>
+              <option value="square" data-t="square">Square</option>
+            </select>
+          </div>
+        </div>
+        <label class="chk"><input type="checkbox" id="pixelMode"><span data-t="pixelMode">Pixel mode</span></label>
+      </div>
+      <label class="chk"><input type="checkbox" id="drift"><span><span data-t="drift">Drift color</span><small data-t="driftHint">The hue turns as you draw, so the line walks the scale.</small></span></label>
+    </div>
+    <div class="btns">
+      <button class="go" id="replay" data-t="replay">Replay</button>
+      <button id="undo" data-t="undo" title="Undo (Ctrl+Z)">Undo</button>
+      <button id="redo" data-t="redo" title="Redo (Ctrl+Y)">Redo</button>
+      <button id="clear" data-t="clear">Clear</button>
+    </div>
+    <div class="btns">
+      <button id="imp" data-t="import">Import</button>
+      <button id="exp" aria-expanded="false" aria-controls="expmenu" data-t="export">Export</button>
+    </div>
+    <div class="btns" id="expmenu" hidden>
+      <button id="exppng" data-t="exportPicture">Picture (.png)</button>
+      <button id="expchro" data-t="exportReplay">Replay (.chro)</button>
+    </div>
+    <input type="file" id="file" accept=".chro" hidden>
+    <p class="status" id="status" role="status"></p>
+    <div class="panel-footer">
+      <button id="creditsBtn" class="credits-btn" type="button">Credits</button>
+    </div>
+  </aside>
+  <main class="stage" id="stage">
+    <canvas id="cv"></canvas>
+    <canvas id="fx"></canvas>
+    <div class="playhead" id="ph"></div>
+    <div class="hint" id="hint"><span class="d" id="quote">Pick a color, then draw.</span></div>
+  </main>
+</div>
+<div id="creditsModal" class="modal" hidden aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="creditsTitle">
+    <button id="creditsClose" class="modal-close" type="button" aria-label="Close credits">×</button>
+    <h2 id="creditsTitle">Credits</h2>
+    <p>Coding: Mendukusai</p>
+    <p>Design: Mendukusai</p>
+    <p>Still a work in progress :P</p>
+    <p>I hate my life</p>
+    <p>v.1.0.0</p>
+  </div>
+</div>
+<script src="script.js"></script>
+
+</body>
+</html>
